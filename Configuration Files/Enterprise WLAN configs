@@ -1,0 +1,133 @@
+svis
+
+vlan 10
+active
+int vlan 10
+ip address 172.16.1.2 255.255.255.0
+standby version 2
+standby 10 ip 172.16.1.1
+standby 10 priority 110
+standby 10 preempt
+
+standby
+int vlan 10
+ip address 172.16.1.3 255.255.255.0
+standby version 2
+standby 10 ip 172.16.1.1
+standby 10 priority 90
+standby 10 preempt
+
+vlan 20
+active
+int vlan 20
+ip address 172.16.2.2 255.255.255.0
+standby version 2
+standby 20 ip 172.16.2.1
+standby 20 priority 110
+standby 20 preempt
+
+standby
+int vlan 20
+ip address 172.16.2.3 255.255.255.0
+standby version 2
+standby 20 ip 172.16.2.1
+standby 20 priority 90
+standby 20 preempt
+
+vlan 30
+active
+int vlan 30
+ip address 172.16.3.2 255.255.255.0
+standby version 2
+standby 30 ip 172.16.3.1
+standby 30 priority 110
+standby 30 preempt
+
+standby
+int vlan 30
+ip address 172.16.3.3 255.255.255.0
+standby version 2
+standby 30 ip 172.16.3.1
+standby 30 priority 90
+standby 30 preempt
+
+
+vlan 40
+active
+int vlan 40
+ip address 172.16.4.2 255.255.255.0
+standby version 2
+standby 40 ip 172.16.4.1
+standby 40 priority 90
+standby 40 preempt
+
+standby
+int vlan 40
+ip address 172.16.4.3 255.255.255.0
+standby version 2
+standby 40 ip 172.16.4.1
+standby 40 priority 110
+standby 40 preempt
+
+vlan 50
+active
+int vlan 50
+ip address 172.16.5.2 255.255.255.0
+standby version 2
+standby 50 ip 172.16.5.1
+standby 50 priority 90
+standby 50 preempt
+
+standby
+int vlan 50
+ip address 172.16.5.3 255.255.255.0
+standby version 2
+standby 50 ip 172.16.5.1
+standby 50 priority 110
+standby 50 preempt
+
+
+
+
+..OSPF
+..distribution active
+router ospf 1
+network 10.0.0.0 0.0.0.3 area 0
+network 10.0.0.4 0.0.0.3 area 0
+network 172.16.1.0 0.0.0.255 area 0
+network 172.16.2.0 0.0.0.255 area 0
+network 172.16.3.0 0.0.0.255 area 0
+network 172.16.4.0 0.0.0.255 area 0
+network 172.16.5.0 0.0.0.255 area 0
+
+
+..distribution standby
+router ospf 1
+network 10.0.0.8 0.0.0.3 area 0
+network 10.0.0.12 0.0.0.3 area 0
+network 172.16.1.0 0.0.0.255 area 0
+network 172.16.2.0 0.0.0.255 area 0
+network 172.16.3.0 0.0.0.255 area 0
+network 172.16.4.0 0.0.0.255 area 0
+network 172.16.5.0 0.0.0.255 area 0
+
+
+..core 1
+router ospf 1
+network 10.0.0.0 0.0.0.3 area 0
+network 10.0.0.16 0.0.0.3 area 0
+network 10.0.0.8 0.0.0.3 area 0
+network 10.0.0.20 0.0.0.3 area 0
+
+
+..core 2
+router ospf 1
+network 10.0.0.12 0.0.0.3 area 0
+network 10.0.0.16 0.0.0.3 area 0
+network 10.0.0.4 0.0.0.3 area 0
+
+
+..servers access
+router ospf 1
+network 10.0.0.20 0.0.0.3 area 0
+network 172.16.6.0 0.0.0.255 area 0
